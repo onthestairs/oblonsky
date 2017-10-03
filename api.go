@@ -134,11 +134,18 @@ func makeQuery(origin string, destination string, departAtTime time.Time) Journe
 	return JourneyQuery{origin, destination, "Single", 5, 1, 0, outboundJourney, railcards, false, 1, 0, 1}
 }
 
-func doQuery(query JourneyQuery) JourneySearchResult {
-	url := "https://api.thetrainline.com/mobile/journeys"
+func doQuery(query JourneyQuery) (JourneySearchResult, error) {
+	var journeySearchResult JourneySearchResult
 
-	body, _ := json.Marshal(query)
-	req, _ := http.NewRequest("POST", url, bytes.NewBuffer(body))
+	url := "https://api.thetrainline.com/mobile/journeys"
+	body, err := json.Marshal(query)
+	if err != nil {
+		return journeySearchResult, err
+	}
+	req, err := http.NewRequest("POST", url, bytes.NewBuffer(body))
+	if err != nil {
+		return journeySearchResult, err
+	}
 	req.Header.Set("X-Feature", "Plan and buy")
 	req.Header.Set("Accept", "application/json")
 	req.Header.Set("Accept-Language", "en-gb")
@@ -159,7 +166,7 @@ func doQuery(query JourneyQuery) JourneySearchResult {
 
 	result := &JourneySearchResult{}
 	json.NewDecoder(resp.Body).Decode(result)
-	return *result
+	return *result, nil
 }
 
 type NiceJourney struct {

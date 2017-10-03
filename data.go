@@ -6,9 +6,8 @@ import (
 	"time"
 )
 
-func getDb() *sql.DB {
-	db, _ := sql.Open("sqlite3", "./train-prices.db")
-	return db
+func getDb() (*sql.DB, error) {
+	return sql.Open("sqlite3", "./train-prices.db")
 }
 
 const createTableQuery = `
@@ -26,12 +25,16 @@ const createTableQuery = `
 	)
 `
 
-func initDatabase(db *sql.DB) {
+func initDatabase(db *sql.DB) error {
 	statement, err := db.Prepare(createTableQuery)
 	if err != nil {
-		panic(err)
+		return err
 	}
-	statement.Exec()
+	_, err = statement.Exec()
+	if err != nil {
+		return err
+	}
+	return nil
 }
 
 const insertSQL = `
@@ -46,13 +49,16 @@ const insertSQL = `
     ticketType,
     ticketClass
   ) VALUES (
-    ?, ?, ?, ?, ?, ?, ?, ?
+    ?, ?, ?, ?, ?, ?, ?, ?, ?
   )
 `
 
-func insertJourney(db *sql.DB, journey NiceJourney) {
-	statement, _ := db.Prepare(insertSQL)
-	statement.Exec(
+func insertJourney(db *sql.DB, journey NiceJourney) error {
+	statement, err := db.Prepare(insertSQL)
+	if err != nil {
+		return err
+	}
+	_, err = statement.Exec(
 		time.Now(),
 		journey.departureStation,
 		journey.departureTime,
@@ -63,4 +69,8 @@ func insertJourney(db *sql.DB, journey NiceJourney) {
 		journey.ticketType,
 		journey.ticketClass,
 	)
+	if err != nil {
+		return err
+	}
+	return nil
 }
