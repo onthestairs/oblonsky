@@ -1,0 +1,37 @@
+POST /mobile/journeys HTTP/1.1
+Host: api.thetrainline.com
+X-Feature: Plan and buy
+Accept: application/json
+Accept-Language: en-gb
+Accept-Encoding: gzip, deflate
+X-Api-Version: 2.0
+X-Platform-Type: iOS
+Content-Length: 406
+User-Agent: Trainline/16772 CFNetwork/887 Darwin/17.0.0
+Connection: keep-alive
+Content-Type: application/json
+X-Consumer-Version: 923
+X-NewRelic-ID: UAcAUVNUGwcIUVVSDwA=
+
+{
+    "origin": "OXN",
+    "destination": "182",
+
+
+    "journeyType": "Single",
+    "maxJourneys": 5,
+    "adults": 1,
+    "children": 0,
+    "outboundJourney": {
+        "type": "LeaveAfter",
+        "time": "2017-10-02T22:59:31"
+    }
+
+
+        ,"railcards":[]
+    ,
+    "timeTableOnly": false,
+    "eticketSupported": 1,
+    "pricePredictionSupported": 0,
+    "ShowCancelledTrains": 1
+}
