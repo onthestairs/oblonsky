@@ -160,7 +160,7 @@ func doQuery(query JourneyQuery) (JourneySearchResult, error) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
-		panic(err)
+		return journeySearchResult, nil
 	}
 	defer resp.Body.Close()
 

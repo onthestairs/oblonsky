@@ -42,9 +42,9 @@ func main() {
 			log.Printf("Doing %s -> %s (%s)\n", query.Origin, query.Destination, query.OutboundJourney.Time)
 			err = runQuery(db, query)
 			if err != nil {
-				continue
+				log.Printf("ERROR!: %s", err.Error())
 			}
-			secondsToWait := random(10, 40)
+			secondsToWait := random(3, 15)
 			time.Sleep(time.Duration(secondsToWait) * time.Second)
 		}
 		time.Sleep(1 * time.Minute)
