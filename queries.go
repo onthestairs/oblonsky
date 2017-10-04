@@ -5,6 +5,8 @@ import (
 )
 
 const oxenholme = "OXN"
+const manchester = "115"
+const wakefield = "164"
 const londonStations = "182"
 
 func generateTimes(numberOfDays int) []time.Time {
@@ -21,7 +23,7 @@ func generateTimes(numberOfDays int) []time.Time {
 }
 
 func generateQueries() []JourneyQuery {
-	northStations := []string{oxenholme}
+	northStations := []string{oxenholme, manchester, wakefield}
 	var queries []JourneyQuery
 	for _, northStation := range northStations {
 		times := generateTimes(60)
