@@ -23,11 +23,11 @@ func generateTimes(numberOfDays int) []time.Time {
 }
 
 func generateQueries() []JourneyQuery {
-	northStations := []string{oxenholme, manchester, wakefield}
+	northStations := []string{wakefield, manchester, oxenholme}
+	times := generateTimes(60)
 	var queries []JourneyQuery
-	for _, northStation := range northStations {
-		times := generateTimes(60)
-		for _, t := range times {
+	for _, t := range times {
+		for _, northStation := range northStations {
 			southQuery := makeQuery(northStation, londonStations, t)
 			northQuery := makeQuery(londonStations, northStation, t)
 			queries = append(queries, southQuery, northQuery)
